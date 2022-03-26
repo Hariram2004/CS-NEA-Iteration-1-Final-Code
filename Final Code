@@ -1,0 +1,111 @@
+import tkinter as tk
+
+#Imports the tkinter library and PIL module
+from tkinter import *
+from PIL import ImageTk, Image
+
+#Creates instance of tkinter window
+window = tk.Tk()
+
+#Resizes the size of the background image to the size of the screen
+def resizeBackground(screenWidth, screenHeight):
+
+    #Defines the background image
+    bgFile = Image.open('E:\Hariram\CS NEA Python\Card Images\Background.png')
+
+    #Resizes the image to the size of the size of the screen
+    resizedBG = bgFile.resize((screenWidth, screenHeight), Image.ANTIALIAS)
+    newBackground = ImageTk.PhotoImage(resizedBG)
+
+    return newBackground
+
+#Displays the value stored in the pot
+def displayPot(potValue):
+
+    #Converts to string type
+    potValueStr = str(potValue)
+
+    #Displays the label for value in the pot
+    potLabel = Label(window, text=('Pot Value: ' + potValueStr))
+
+#Displays the value of number of poker chips held by each player
+def displayUserChips(numOfChips, playerNum, X, Y):
+
+    #Converts to string type
+    numChipsStr = str(numOfChips)
+    playerNumStr = str(playerNum)
+
+    #Displays the label for number of poker chips
+    chipLabel = Label(window, text=('Player ' + playerNumStr + 'Chips: ' + numChipsStr))
+    chipLabel.place(x=X, y=Y)
+
+#Displays the number of chips the user is willing to bet for that round
+def displayChipsToBet(chipsBet, X, Y):
+
+    #Converts to string type
+    chipsBetStr = str(chipsBet)
+
+    #Converts the type of number of chips to string
+    betLabel = Label(window, text=('Number of Chips Betting: ' + chipsBetStr))
+    betLabel.place(x=X, y=Y)
+
+#Function to create the buttons for the appropriate moves
+def createButton(move,X, Y):
+
+    #Creates the button with the text being set
+    button = Button(window, text=move)
+
+    #Places the button in its' appropriate place
+    button.place(x=X, y=Y)
+
+    return button
+
+
+#///*Main Program*///
+
+#Retrieves values for width and height of the screen
+screenWidth = window.winfo_screenwidth()
+screenHeight = window.winfo_screenheight()
+
+#Creates a canvas of height and weight of the screen
+canvas = Canvas(window, height=screenHeight, width=screenWidth)
+
+#Calls function to resize background to the size of the screen
+newBackground = resizeBackground(screenWidth, screenHeight)
+
+#Places the image on the canvas
+canvas.create_image(0, 0, anchor=NW, image=newBackground)
+canvas.pack()
+
+#Value of the pot is initialised as 0
+potValue = 0
+displayPot(potValue)
+
+#Number of Poker Chips per player is initialised to 500 and initialBets to 0
+numOfChipsPerPlayer = 500
+initialBets = 0
+
+#To display number of poker chips held by each player
+displayUserChips(numOfChipsPerPlayer, 1, 500, 930)
+displayUserChips(numOfChipsPerPlayer, 2, 60, 500)
+displayUserChips(numOfChipsPerPlayer, 3, 500, 120)
+displayUserChips(numOfChipsPerPlayer, 4, 1100, 120)
+displayUserChips(numOfChipsPerPlayer, 5, 1550, 500)
+displayUserChips(numOfChipsPerPlayer, 6, 1100, 930)
+
+#To display number of poker chips held by each player
+displayChipsToBet(initialBets, 700, 950)
+displayChipsToBet(initialBets, 60, 520)
+displayChipsToBet(initialBets, 700, 100)
+displayChipsToBet(initialBets, 1100, 100)
+displayChipsToBet(initialBets, 1750, 520)
+displayChipsToBet(initialBets, 1100, 950)
+
+#Initialisation of the five buttons the user is to use
+foldBtn = createButton("Fold", 1700, 900)
+callBtn = createButton("Call", 1750, 900)
+raiseBtn = createButton("Raise", 1800, 900)
+checkBtn = createButton("Check", 1700, 850)
+betBtn = createButton("Bet", 1750, 850)
+
+window.mainloop()
